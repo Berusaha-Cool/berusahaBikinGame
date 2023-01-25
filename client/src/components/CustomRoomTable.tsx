@@ -22,6 +22,7 @@ import { getAvatarString, getColorByString } from '../util'
 
 import phaserGame from '../PhaserGame'
 import Bootstrap from '../scenes/Bootstrap'
+import { Link } from '@mui/material'
 
 const MessageText = styled.p`
   margin: 10px;
@@ -122,7 +123,7 @@ export const CustomRoomTable = () => {
   }
 
   return availableRooms.length === 0 ? (
-    <MessageText>There are no custom rooms now, create one or join the public lobby.</MessageText>
+    <MessageText>belum ada bisnis yang dibuat</MessageText>
   ) : (
     <>
       <CustomRoomTableContainer component={Paper}>
@@ -132,7 +133,8 @@ export const CustomRoomTable = () => {
               <TableCell></TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Description</TableCell>
-              <TableCell>ID</TableCell>
+              {/* <TableCell>ID</TableCell> */}
+              <TableCell align="center">Level</TableCell>
               <TableCell align="center">
                 <PeopleAltIcon />
               </TableCell>
@@ -151,12 +153,15 @@ export const CustomRoomTable = () => {
                     </Avatar>
                   </TableCell>
                   <TableCell>
-                    <div className="name">{name}</div>
+                    <Link href={name} target="_blank" color="inherit">
+                      <div className="name">{name}</div>
+                    </Link>
                   </TableCell>
                   <TableCell>
                     <div className="description">{description}</div>
                   </TableCell>
-                  <TableCell>{roomId}</TableCell>
+                  {/* <TableCell>{roomId}</TableCell> */}
+                  <TableCell align="center">Bootstrapping</TableCell>
                   <TableCell align="center">{clients}</TableCell>
                   <TableCell align="center">
                     <Tooltip title={hasPassword ? 'Password required' : ''}>

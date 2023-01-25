@@ -24,8 +24,11 @@ export const CreateRoomForm = () => {
   const [values, setValues] = useState<IRoomData>({
     name: '',
     description: '',
+    idea: '',
+    progress: '',
+    failure: '',
     password: null,
-    autoDispose: true,
+    autoDispose: false,
   })
   const [showPassword, setShowPassword] = useState(false)
   const [nameFieldEmpty, setNameFieldEmpty] = useState(false)
@@ -58,7 +61,7 @@ export const CreateRoomForm = () => {
   return (
     <CreateRoomFormWrapper onSubmit={handleSubmit}>
       <TextField
-        label="Name"
+        label="Nama Bisnis yang lu pengen buat ?"
         variant="outlined"
         color="secondary"
         autoFocus
@@ -68,14 +71,44 @@ export const CreateRoomForm = () => {
       />
 
       <TextField
-        label="Description"
+        label="deskripsikan elo saat ini ?"
+        variant="outlined"
+        color="secondary"
+        // error={descriptionFieldEmpty}
+        // helperText={descriptionFieldEmpty && 'Description is required'}
+        multiline
+        rows={4}
+        onChange={handleChange('description')}
+      />
+      <TextField
+        label="Apa ide bisnis lo?"
         variant="outlined"
         color="secondary"
         error={descriptionFieldEmpty}
         helperText={descriptionFieldEmpty && 'Description is required'}
         multiline
         rows={4}
-        onChange={handleChange('description')}
+        onChange={handleChange('idea')}
+      />
+      <TextField
+        label="Sejauh mana ide lo ?"
+        variant="outlined"
+        color="secondary"
+        error={descriptionFieldEmpty}
+        helperText={descriptionFieldEmpty && 'Description is required'}
+        multiline
+        rows={4}
+        onChange={handleChange('progress')}
+      />
+          <TextField
+        label="kesulitan lo dalam mewujudkannya ?"
+        variant="outlined"
+        color="secondary"
+        // error={descriptionFieldEmpty}
+        // helperText={descriptionFieldEmpty && 'Description is required'}
+        multiline
+        rows={4}
+        onChange={handleChange('failure')}
       />
 
       <TextField

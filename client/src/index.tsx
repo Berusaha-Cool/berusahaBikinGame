@@ -9,6 +9,7 @@ import './PhaserGame'
 import muiTheme from './MuiTheme'
 import App from './App'
 import store from './stores'
+import "./fonts/joystixMonospace.ttf"
 
 const container = document.getElementById('root')
 const root = createRoot(container!)

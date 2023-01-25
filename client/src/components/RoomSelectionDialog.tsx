@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import logo from '../images/logo.png'
+import logo from '../images/logo2.png'
 import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
@@ -18,6 +18,7 @@ import phaserGame from '../PhaserGame'
 import Bootstrap from '../scenes/Bootstrap'
 
 const Backdrop = styled.div`
+  font-family: 'Light';
   position: absolute;
   top: 50%;
   left: 50%;
@@ -27,7 +28,10 @@ const Backdrop = styled.div`
   gap: 60px;
   align-items: center;
 `
-
+const BoxModal = styled.div`
+  align-items: center;
+  z-index: 70;
+`
 const Wrapper = styled.div`
   background: #222639;
   border-radius: 16px;
@@ -51,8 +55,8 @@ const CustomRoomWrapper = styled.div`
 const TitleWrapper = styled.div`
   display: grid;
   width: 100%;
-
   .back-button {
+    margin-right: 100px;
     grid-column: 1;
     grid-row: 1;
     justify-self: start;
@@ -60,6 +64,7 @@ const TitleWrapper = styled.div`
   }
 
   h1 {
+    padding-left: 25px;
     grid-column: 1;
     grid-row: 1;
     justify-self: center;
@@ -68,7 +73,7 @@ const TitleWrapper = styled.div`
 `
 
 const Title = styled.h1`
-  font-size: 24px;
+  font-size: 18px;
   color: #eee;
   text-align: center;
 `
@@ -108,6 +113,7 @@ export default function RoomSelectionDialog() {
   const lobbyJoined = useAppSelector((state) => state.room.lobbyJoined)
 
   const handleConnect = () => {
+    // alert('opps masih pengembangan')
     if (lobbyJoined) {
       const bootstrap = phaserGame.scene.keys.bootstrap as Bootstrap
       bootstrap.network
@@ -138,6 +144,7 @@ export default function RoomSelectionDialog() {
           Trying to connect to server, please try again!
         </Alert>
       </Snackbar>
+
       <Backdrop>
         <Wrapper>
           {showCreateRoomForm ? (
@@ -146,51 +153,50 @@ export default function RoomSelectionDialog() {
                 <IconButton className="back-button" onClick={() => setShowCreateRoomForm(false)}>
                   <ArrowBackIcon />
                 </IconButton>
-                <Title>Create Custom Room</Title>
+                <Title>Coba kita cerita dulu</Title>
               </TitleWrapper>
               <CreateRoomForm />
             </CustomRoomWrapper>
           ) : showCustomRoom ? (
-            <CustomRoomWrapper>
-              <TitleWrapper>
-                <IconButton className="back-button" onClick={() => setShowCustomRoom(false)}>
-                  <ArrowBackIcon />
-                </IconButton>
-                <Title>
-                  Custom Rooms
-                  <Tooltip
-                    title="We update the results in realtime, no refresh needed!"
-                    placement="top"
-                  >
-                    <IconButton>
-                      <HelpOutlineIcon className="tip" />
-                    </IconButton>
-                  </Tooltip>
-                </Title>
-              </TitleWrapper>
-              <CustomRoomTable />
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => setShowCreateRoomForm(true)}
-              >
-                Create new room
-              </Button>
-            </CustomRoomWrapper>
+            <>
+              <CustomRoomWrapper>
+                <TitleWrapper>
+                  <IconButton className="back-button" onClick={() => setShowCustomRoom(false)}>
+                    <ArrowBackIcon />
+                  </IconButton>
+                  <Title>
+                    Selamat Datang di dunia Enterpreneur
+                    <Tooltip title="silahkan masuk ke dunia bisnis anda sendiri" placement="top">
+                      <IconButton>
+                        <HelpOutlineIcon className="tip" />
+                      </IconButton>
+                    </Tooltip>
+                  </Title>
+                </TitleWrapper>
+                <CustomRoomTable />
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => setShowCreateRoomForm(true)}
+                >
+                  Buat BisnisMu sekarang
+                </Button>
+              </CustomRoomWrapper>
+            </>
           ) : (
             <>
-              <Title>Welcome to SkyOffice</Title>
+              {/* <Title>Welcome to SkyOffice</Title> */}
               <Content>
-                <img src={logo} alt="logo" />
-                <Button variant="contained" color="secondary" onClick={handleConnect}>
-                  Connect to public lobby
-                </Button>
+                <img src={logo} alt="logo" width={500} />
+                {/* <Button variant="contained" color="secondary" onClick={handleConnect}>
+                  Enter into your startup
+                </Button> */}
                 <Button
-                  variant="outlined"
-                  color="secondary"
+                  variant="contained"
+                  color="success"
                   onClick={() => (lobbyJoined ? setShowCustomRoom(true) : setShowSnackbar(true))}
                 >
-                  Create/find custom rooms
+                  MULAI
                 </Button>
               </Content>
             </>

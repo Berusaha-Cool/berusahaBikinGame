@@ -1,0 +1,42 @@
+.App {
+    text-align: center;
+  }
+  
+  .App-header {
+    
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+  }
+  
+  .light {
+    background-color: #DFE3EB;
+    color: #525BC4;
+  }
+  
+  .dark {
+    background-color: #282c34;
+    color: white;
+  }
+  
+  .theme-toggle-btn{
+    padding: 1%;
+    border: 0;
+    cursor: pointer;
+    bottom: 5%;
+    font-size: 0.5em;
+    position: absolute;
+  }
+  
+  .icon-light{
+      color: #DFE3EB;
+      background-color: #525BC4;
+  }
+  
+  .icon-dark{
+      background-color: #dc1568;
+      color: white;
+  }
