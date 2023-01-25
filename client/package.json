@@ -1,7 +1,7 @@
 {
-  "name": "skyoffice",
+  "name": "berusaha.cool",
   "private": true,
-  "description": "Client for SkyOffice",
+  "description": "Client for berusaha.cool",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
@@ -22,6 +22,7 @@
     "phaser": "^3.55.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-h5-audio-player": "^3.8.6",
     "react-redux": "^7.2.5",
     "sass": "^1.42.1",
     "styled-components": "^5.3.5",
