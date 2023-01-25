@@ -7,6 +7,7 @@ import Network from '../services/Network'
 import Chair from '../items/Chair'
 import Computer from '../items/Computer'
 import Whiteboard from '../items/Whiteboard'
+import Calender from '../items/Calender'
 
 import { phaserEvents, Event } from '../events/EventCenter'
 import store from '../stores'
@@ -62,9 +63,13 @@ export default class MyPlayer extends Player {
           const whiteboard = item as Whiteboard
           whiteboard.openDialog(network)
           break
+        case ItemType.CALENDER:
+          const calender = item as Calender
+          calender.openDialog(network)
+          break
         case ItemType.VENDINGMACHINE:
           // hacky and hard-coded, but leaving it as is for now
-          window.open('https://www.buymeacoffee.com/skyoffice', '_blank')
+          window.open('https://github.com/fandilladp', '_blank')
           break
       }
     }

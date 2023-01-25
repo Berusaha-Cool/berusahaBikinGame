@@ -8,6 +8,7 @@ import Chair from '../items/Chair'
 import Computer from '../items/Computer'
 import Whiteboard from '../items/Whiteboard'
 import VendingMachine from '../items/VendingMachine'
+import Calender from '../items/Calender'
 import '../characters/MyPlayer'
 import '../characters/OtherPlayer'
 import MyPlayer from '../characters/MyPlayer'
@@ -34,6 +35,7 @@ export default class Game extends Phaser.Scene {
   private otherPlayerMap = new Map<string, OtherPlayer>()
   computerMap = new Map<string, Computer>()
   private whiteboardMap = new Map<string, Whiteboard>()
+  private calenderMap = new Map<string, Calender>()
 
   constructor() {
     super('game')
@@ -121,6 +123,21 @@ export default class Game extends Phaser.Scene {
       this.whiteboardMap.set(id, item)
     })
 
+    const calenders = this.physics.add.staticGroup({ classType: Calender })
+    const calenderLayer = this.map.getObjectLayer('Calender')
+    calenderLayer.objects.forEach((obj, i) => {
+      const item = this.addObjectFromTiled(
+        calenders,
+        obj,
+        'calenders',
+        'calender'
+      ) as Calender
+      const id = `${i}`
+      item.id = id
+      this.calenderMap.set(id, item)
+    })
+
+
     // import vending machine objects from Tiled map to Phaser
     const vendingMachines = this.physics.add.staticGroup({ classType: VendingMachine })
     const vendingMachineLayer = this.map.getObjectLayer('VendingMachine')
@@ -144,9 +161,10 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider([this.myPlayer, this.myPlayer.playerContainer], groundLayer)
     this.physics.add.collider([this.myPlayer, this.myPlayer.playerContainer], vendingMachines)
 
+
     this.physics.add.overlap(
       this.playerSelector,
-      [chairs, computers, whiteboards, vendingMachines],
+      [chairs, computers, whiteboards, vendingMachines, calenders],
       this.handleItemSelectorOverlap,
       undefined,
       this
@@ -263,6 +281,9 @@ export default class Game extends Phaser.Scene {
     } else if (itemType === ItemType.WHITEBOARD) {
       const whiteboard = this.whiteboardMap.get(itemId)
       whiteboard?.addCurrentUser(playerId)
+    } else if (itemType === ItemType.CALENDER){
+      const calender = this.calenderMap.get(itemId)
+      calender?.addCurrentUser(playerId)
     }
   }
 
@@ -273,6 +294,9 @@ export default class Game extends Phaser.Scene {
     } else if (itemType === ItemType.WHITEBOARD) {
       const whiteboard = this.whiteboardMap.get(itemId)
       whiteboard?.removeCurrentUser(playerId)
+    } else if(itemType === ItemType.CALENDER){
+      const calender = this.calenderMap.get(itemId)
+      calender?.removeCurrentUser(playerId)
     }
   }
 

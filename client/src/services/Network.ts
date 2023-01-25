@@ -1,5 +1,11 @@
 import { Client, Room } from 'colyseus.js'
-import { IComputer, IOfficeState, IPlayer, IWhiteboard } from '../../../types/IOfficeState'
+import {
+  IComputer,
+  IOfficeState,
+  IPlayer,
+  IWhiteboard,
+  ICalender,
+} from '../../../types/IOfficeState'
 import { Message } from '../../../types/Messages'
 import { IRoomData, RoomType } from '../../../types/Rooms'
 import { ItemType } from '../../../types/Items'
@@ -20,6 +26,7 @@ import {
   pushPlayerLeftMessage,
 } from '../stores/ChatStore'
 import { setWhiteboardUrls } from '../stores/WhiteboardStore'
+import { setCalenderUrls } from '../stores/CalenderStore'
 
 export default class Network {
   private client: Client
@@ -155,6 +162,22 @@ export default class Network {
       }
     }
 
+    this.room.state.calenders.onAdd = (calender: ICalender, key: string) => {
+      store.dispatch(
+        setCalenderUrls({
+          calenderId: key,
+          roomId: calender.roomId,
+        })
+      )
+      // track changes on every child object's connectedUser
+      calender.connectedUser.onAdd = (item, index) => {
+        phaserEvents.emit(Event.ITEM_USER_ADDED, item, key, ItemType.CALENDER)
+      }
+      calender.connectedUser.onRemove = (item, index) => {
+        phaserEvents.emit(Event.ITEM_USER_REMOVED, item, key, ItemType.CALENDER)
+      }
+    }
+
     // new instance added to the chatMessages ArraySchema
     this.room.state.chatMessages.onAdd = (item, index) => {
       store.dispatch(pushChatMessage(item))
@@ -274,7 +297,13 @@ export default class Network {
   disconnectFromWhiteboard(id: string) {
     this.room?.send(Message.DISCONNECT_FROM_WHITEBOARD, { whiteboardId: id })
   }
+  connectToCalender(id: string) {
+    this.room?.send(Message.CONNECT_TO_CALENDER, { calenderId: id })
+  }
 
+  disconnectFromCalender(id: string) {
+    this.room?.send(Message.DISCONNECT_FROM_CALENDER, { calenderId: id })
+  }
   onStopScreenShare(id: string) {
     this.room?.send(Message.STOP_SCREEN_SHARE, { computerId: id })
   }

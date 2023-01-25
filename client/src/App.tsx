@@ -1,15 +1,15 @@
-import React from 'react'
 import styled from 'styled-components'
 
 import { useAppSelector } from './hooks'
 
-import RoomSelectionDialog from './components/RoomSelectionDialog'
-import LoginDialog from './components/LoginDialog'
-import ComputerDialog from './components/ComputerDialog'
-import WhiteboardDialog from './components/WhiteboardDialog'
-import VideoConnectionDialog from './components/VideoConnectionDialog'
+import CalenderDialog from './components/CalenderDialog'
 import Chat from './components/Chat'
+import ComputerDialog from './components/ComputerDialog'
 import HelperButtonGroup from './components/HelperButtonGroup'
+import LoginDialog from './components/LoginDialog'
+import RoomSelectionDialog from './components/RoomSelectionDialog'
+import VideoConnectionDialog from './components/VideoConnectionDialog'
+import WhiteboardDialog from './components/WhiteboardDialog'
 
 const Backdrop = styled.div`
   position: absolute;
@@ -21,6 +21,7 @@ function App() {
   const loggedIn = useAppSelector((state) => state.user.loggedIn)
   const computerDialogOpen = useAppSelector((state) => state.computer.computerDialogOpen)
   const whiteboardDialogOpen = useAppSelector((state) => state.whiteboard.whiteboardDialogOpen)
+  const calenderDialogOpen = useAppSelector((state) => state.calender.calenderDialogOpen)
   const videoConnected = useAppSelector((state) => state.user.videoConnected)
   const roomJoined = useAppSelector((state) => state.room.roomJoined)
 
@@ -32,11 +33,14 @@ function App() {
     } else if (whiteboardDialogOpen) {
       /* Render WhiteboardDialog if user is using a whiteboard. */
       ui = <WhiteboardDialog />
+    } else if (calenderDialogOpen) {
+      ui = <CalenderDialog />
     } else {
       ui = (
         /* Render Chat or VideoConnectionDialog if no dialogs are opened. */
         <>
           <Chat />
+
           {/* Render VideoConnectionDialog if user is not connected to a webcam. */}
           {!videoConnected && <VideoConnectionDialog />}
         </>

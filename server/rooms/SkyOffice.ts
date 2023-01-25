@@ -1,10 +1,12 @@
 import bcrypt from 'bcrypt'
 import { Room, Client, ServerError } from 'colyseus'
 import { Dispatcher } from '@colyseus/command'
-import { Player, OfficeState, Computer, Whiteboard } from './schema/OfficeState'
+import { Player, OfficeState, Computer, Whiteboard, Calender } from './schema/OfficeState'
 import { Message } from '../../types/Messages'
 import { IRoomData } from '../../types/Rooms'
 import { whiteboardRoomIds } from './schema/OfficeState'
+import { calenderRoomIds } from './schema/OfficeState'
+
 import PlayerUpdateCommand from './commands/PlayerUpdateCommand'
 import PlayerUpdateNameCommand from './commands/PlayerUpdateNameCommand'
 import {
@@ -15,6 +17,10 @@ import {
   WhiteboardAddUserCommand,
   WhiteboardRemoveUserCommand,
 } from './commands/WhiteboardUpdateArrayCommand'
+import {
+  CalenderAddUserCommand,
+  CalenderRemoveUserCommand,
+} from './commands/CalenderUpdateArrayCommand'
 import ChatMessageUpdateCommand from './commands/ChatMessageUpdateCommand'
 
 export class SkyOffice extends Room<OfficeState> {
@@ -47,6 +53,10 @@ export class SkyOffice extends Room<OfficeState> {
     // HARD-CODED: Add 3 whiteboards in a room
     for (let i = 0; i < 3; i++) {
       this.state.whiteboards.set(String(i), new Whiteboard())
+    }
+
+    for (let i = 0; i < 1; i++) {
+      this.state.calenders.set(String(i), new Calender())
     }
 
     // when a player connect to a computer, add to the computer connectedUser array
@@ -95,6 +105,22 @@ export class SkyOffice extends Room<OfficeState> {
         })
       }
     )
+
+    // when a player connect to a calender, add to the calender connectedUser array
+    this.onMessage(Message.CONNECT_TO_CALENDER, (client, message: { calenderId: string }) => {
+      this.dispatcher.dispatch(new CalenderAddUserCommand(), {
+        client,
+        calenderId: message.calenderId,
+      })
+    })
+
+    // when a player disconnect from a calender, remove from the calender connectedUser array
+    this.onMessage(Message.DISCONNECT_FROM_CALENDER, (client, message: { calenderId: string }) => {
+      this.dispatcher.dispatch(new CalenderRemoveUserCommand(), {
+        client,
+        calenderId: message.calenderId,
+      })
+    })
 
     // when receiving updatePlayer message, call the PlayerUpdateCommand
     this.onMessage(
@@ -188,13 +214,17 @@ export class SkyOffice extends Room<OfficeState> {
         whiteboard.connectedUser.delete(client.sessionId)
       }
     })
+    this.state.calenders.forEach((calender) => {
+      if (calender.connectedUser.has(client.sessionId)) {
+        calender.connectedUser.delete(client.sessionId)
+      }
+    })
   }
 
   onDispose() {
     this.state.whiteboards.forEach((whiteboard) => {
       if (whiteboardRoomIds.has(whiteboard.roomId)) whiteboardRoomIds.delete(whiteboard.roomId)
     })
-
     console.log('room', this.roomId, 'disposing...')
     this.dispatcher.stop()
   }
