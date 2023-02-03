@@ -48,7 +48,7 @@ export default class Bootstrap extends Phaser.Scene {
       frameWidth: 48,
       frameHeight: 72,
     })
-    this.load.spritesheet('calender', 'assets/items/calendar.png', {
+    this.load.spritesheet('calender', 'assets/items/calender.png', {
       frameWidth: 16,
       frameHeight: 16,
     })

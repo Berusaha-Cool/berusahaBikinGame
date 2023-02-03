@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
@@ -22,6 +22,8 @@ import { getAvatarString, getColorByString } from '../util'
 
 import phaserGame from '../PhaserGame'
 import Game from '../scenes/Game'
+
+import { AuthContext } from '../context/authContext'
 
 const Wrapper = styled.form`
   position: fixed;
@@ -150,6 +152,7 @@ export default function LoginDialog() {
   const roomName = useAppSelector((state) => state.room.roomName)
   const roomDescription = useAppSelector((state) => state.room.roomDescription)
   const game = phaserGame.scene.keys.game as Game
+  const { displayName } = useContext(AuthContext)
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -202,6 +205,7 @@ export default function LoginDialog() {
             fullWidth
             label="Name"
             variant="outlined"
+            placeholder={displayName}
             color="secondary"
             error={nameFieldEmpty}
             helperText={nameFieldEmpty && 'Name is required'}

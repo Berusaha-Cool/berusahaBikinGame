@@ -71,46 +71,15 @@ export const CreateRoomForm = () => {
       />
 
       <TextField
-        label="deskripsikan elo saat ini ?"
+        label="Deskripsikan Bisnis elo saat ini ?"
         variant="outlined"
         color="secondary"
-        // error={descriptionFieldEmpty}
-        // helperText={descriptionFieldEmpty && 'Description is required'}
+        error={descriptionFieldEmpty}
+        helperText={descriptionFieldEmpty && 'Description is required'}
         multiline
         rows={4}
         onChange={handleChange('description')}
       />
-      <TextField
-        label="Apa ide bisnis lo?"
-        variant="outlined"
-        color="secondary"
-        error={descriptionFieldEmpty}
-        helperText={descriptionFieldEmpty && 'Description is required'}
-        multiline
-        rows={4}
-        onChange={handleChange('idea')}
-      />
-      <TextField
-        label="Sejauh mana ide lo ?"
-        variant="outlined"
-        color="secondary"
-        error={descriptionFieldEmpty}
-        helperText={descriptionFieldEmpty && 'Description is required'}
-        multiline
-        rows={4}
-        onChange={handleChange('progress')}
-      />
-          <TextField
-        label="kesulitan lo dalam mewujudkannya ?"
-        variant="outlined"
-        color="secondary"
-        // error={descriptionFieldEmpty}
-        // helperText={descriptionFieldEmpty && 'Description is required'}
-        multiline
-        rows={4}
-        onChange={handleChange('failure')}
-      />
-
       <TextField
         type={showPassword ? 'text' : 'password'}
         label="Password (optional)"

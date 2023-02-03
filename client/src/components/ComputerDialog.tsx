@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
@@ -8,6 +8,8 @@ import { useAppSelector, useAppDispatch } from '../hooks'
 import { closeComputerDialog } from '../stores/ComputerStore'
 
 import Video from './Video'
+import Dashboard from './Dashboard/Dasboard'
+import Menus from './Menus'
 
 const Backdrop = styled.div`
   position: fixed;
@@ -16,12 +18,14 @@ const Backdrop = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  padding: 16px 180px 16px 16px;
+  padding: 16px 16px 16px 16px;
 `
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  background: #222639;
+  // background: linear-gradient(110deg, #ef8669 60%, #f8ad47 60%);
+  background: rgb(73,116,154);
+  background: radial-gradient(circle, rgba(73,116,154,1) 0%, rgba(64,92,129,1) 55%, rgba(44,68,100,1) 92%);
   border-radius: 16px;
   padding: 16px;
   color: #eee;
@@ -31,6 +35,7 @@ const Wrapper = styled.div`
   box-shadow: 0px 0px 5px #0000006f;
 
   .close {
+    color: #0000006f;
     position: absolute;
     top: 16px;
     right: 16px;
@@ -84,12 +89,16 @@ function VideoContainer({ playerName, stream }) {
 }
 
 export default function ComputerDialog() {
+  const [openDashboard, setOpenDasboard] = useState<any>(false)
+
   const dispatch = useAppDispatch()
   const playerNameMap = useAppSelector((state) => state.user.playerNameMap)
   const shareScreenManager = useAppSelector((state) => state.computer.shareScreenManager)
   const myStream = useAppSelector((state) => state.computer.myStream)
   const peerStreams = useAppSelector((state) => state.computer.peerStreams)
-
+  useEffect(() => {
+    console.log(openDashboard)
+  }, [openDashboard])
   return (
     <Backdrop>
       <Wrapper>
@@ -104,7 +113,7 @@ export default function ComputerDialog() {
         <div className="toolbar">
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={() => {
               if (shareScreenManager?.myStream) {
                 shareScreenManager?.stopScreenShare()
@@ -116,6 +125,7 @@ export default function ComputerDialog() {
             {shareScreenManager?.myStream ? 'Stop sharing' : 'Share Screen'}
           </Button>
         </div>
+        {!openDashboard ? <Menus setOpenDasboard={setOpenDasboard} /> : <Dashboard />}
 
         <VideoGrid>
           {myStream && <VideoContainer stream={myStream} playerName="You" />}

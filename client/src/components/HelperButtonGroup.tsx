@@ -1,8 +1,6 @@
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import CloseIcon from '@mui/icons-material/Close'
 import DarkModeTwoToneIcon from '@mui/icons-material/DarkModeTwoTone'
-import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone'
-import LightbulbIcon from '@mui/icons-material/Lightbulb'
 import LightModeTwoToneIcon from '@mui/icons-material/LightModeTwoTone'
 import MusicNoteTwoToneIcon from '@mui/icons-material/MusicNoteTwoTone'
 import MusicOffTwoToneIcon from '@mui/icons-material/MusicOffTwoTone'
@@ -11,16 +9,19 @@ import Avatar from '@mui/material/Avatar'
 import Fab from '@mui/material/Fab'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
-import { useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
 
+import LogoutIcon from '@mui/icons-material/Logout'
 import { BackgroundMode } from '../../../types/BackgroundMode'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { toggleBackgroundMode } from '../stores/UserStore'
-import { getAvatarString, getColorByString } from '../util'
+import { getColorByString } from '../util'
 import CountdownComponent from './CountdownComponent/CountdownComponent'
 import MusikPlayer from './MusikPlayer'
 
+import { ButtonBase } from '@mui/material'
+import { AuthContext } from '../context/authContext'
 const Backdrop = styled.div`
   position: fixed;
   display: flex;
@@ -106,9 +107,12 @@ const StyledFab = styled(Fab)<{ target?: string }>`
 `
 
 export default function HelperButtonGroup() {
+  const { status, userId, handleLogOut, displayName, photoURL } = useContext(AuthContext)
   const [countdown, setCountdown] = useState(false)
   const [showControlGuide, setShowControlGuide] = useState(false)
   const [showRoomInfo, setShowRoomInfo] = useState(false)
+  const [logoutNow, setLogoutNow] = useState(false)
+
   const backgroundMode = useAppSelector((state) => state.user.backgroundMode)
   const roomJoined = useAppSelector((state) => state.room.roomJoined)
   const roomId = useAppSelector((state) => state.room.roomId)
@@ -125,10 +129,15 @@ export default function HelperButtonGroup() {
               <CloseIcon />
             </IconButton>
             <RoomName>
-              <Avatar style={{ background: getColorByString(roomName) }}>
-                {getAvatarString(roomName)}
-              </Avatar>
-              <h3>{roomName}</h3>
+              <Avatar
+                alt={displayName}
+                src={photoURL}
+                style={{ background: getColorByString(roomName) }}
+              />
+              <h3>{displayName}</h3>
+            </RoomName>
+            <RoomName>
+              <h4>{roomName}</h4>
             </RoomName>
             <RoomDescription>
               <ArrowRightIcon /> ID: {roomId}
@@ -136,10 +145,21 @@ export default function HelperButtonGroup() {
             <RoomDescription>
               <ArrowRightIcon /> Description: {roomDescription}
             </RoomDescription>
-            <p className="tip">
-              <LightbulbIcon />
-              Shareable link coming up 😄
-            </p>
+            <ButtonBase
+              sx={{
+                background: '#538e22',
+                paddingY: 1,
+                paddingX: 3,
+                borderRadius: 10,
+                color: 'white',
+                gap: 1,
+                fontFamily: 'light',
+              }}
+              onClick={handleLogOut}
+            >
+              <LogoutIcon />
+              logout
+            </ButtonBase>
           </Wrapper>
         )}
         {showControlGuide && (
@@ -209,11 +229,11 @@ export default function HelperButtonGroup() {
               }}
             >
               <Avatar
+                alt={displayName}
+                src={photoURL}
                 sx={{ width: 84, height: 84 }}
                 style={{ background: getColorByString(roomName) }}
-              >
-                <DashboardTwoToneIcon sx={{ width: 34, height: 34 }} />
-              </Avatar>
+              />
             </StyledFab>
           </Tooltip>
         </>
