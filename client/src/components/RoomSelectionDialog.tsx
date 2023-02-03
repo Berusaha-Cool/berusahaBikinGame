@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import logo from '../images/logo2.png'
 import styled from 'styled-components'
 import Button from '@mui/material/Button'
@@ -9,6 +9,8 @@ import Alert from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import GoogleIcon from '@mui/icons-material/Google'
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 import { CustomRoomTable } from './CustomRoomTable'
 import { CreateRoomForm } from './CreateRoomForm'
@@ -16,7 +18,9 @@ import { useAppSelector } from '../hooks'
 
 import phaserGame from '../PhaserGame'
 import Bootstrap from '../scenes/Bootstrap'
+import { ButtonBase } from '@mui/material'
 
+import { AuthContext } from '../context/authContext'
 const Backdrop = styled.div`
   font-family: 'Light';
   position: absolute;
@@ -107,13 +111,13 @@ const ProgressBar = styled(LinearProgress)`
 `
 
 export default function RoomSelectionDialog() {
+  const { status, userId, handleLogOut, displayName, email, photoURL, handleLoginWithGoogle } =
+    useContext(AuthContext)
   const [showCustomRoom, setShowCustomRoom] = useState(false)
   const [showCreateRoomForm, setShowCreateRoomForm] = useState(false)
   const [showSnackbar, setShowSnackbar] = useState(false)
   const lobbyJoined = useAppSelector((state) => state.room.lobbyJoined)
-
   const handleConnect = () => {
-    // alert('opps masih pengembangan')
     if (lobbyJoined) {
       const bootstrap = phaserGame.scene.keys.bootstrap as Bootstrap
       bootstrap.network
@@ -124,6 +128,12 @@ export default function RoomSelectionDialog() {
       setShowSnackbar(true)
     }
   }
+  useEffect(() => {
+    console.log(status)
+    if (status === 'authenticated' && !userId == null) {
+      lobbyJoined ? setShowCustomRoom(true) : setShowSnackbar(true)
+    }
+  }, [status])
 
   return (
     <>
@@ -191,13 +201,40 @@ export default function RoomSelectionDialog() {
                 {/* <Button variant="contained" color="secondary" onClick={handleConnect}>
                   Enter into your startup
                 </Button> */}
-                <Button
-                  variant="contained"
-                  color="success"
-                  onClick={() => (lobbyJoined ? setShowCustomRoom(true) : setShowSnackbar(true))}
-                >
-                  MULAI
-                </Button>
+                {status === 'authenticated' ? (
+                  <ButtonBase
+                    sx={{
+                      background: '#538e22',
+                      paddingY:2,
+                      paddingX: 5,
+                      borderRadius: 10,
+                      color: 'white',
+                      gap: 1,
+                      fontFamily: 'light',
+                    }}
+                    onClick={() =>
+                      userId && (lobbyJoined ? setShowCustomRoom(true) : setShowSnackbar(true))
+                    }
+                  >
+                    <PlayCircleOutlineIcon/>
+                    Mulai
+                  </ButtonBase>
+                ) : (
+                  <ButtonBase
+                    sx={{
+                      background: '#538e22',
+                      padding: 2,
+                      borderRadius: 10,
+                      color: 'white',
+                      gap: 1,
+                      fontFamily: 'light',
+                    }}
+                    onClick={handleLoginWithGoogle}
+                  >
+                    <GoogleIcon />
+                    Masuk dengan Google
+                  </ButtonBase>
+                )}
               </Content>
             </>
           )}
