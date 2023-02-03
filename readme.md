@@ -40,7 +40,7 @@ Big thanks to this great repo - [ourcade/phaser3-typescript-parcel-template](htt
 
 Big thanks to pixel artist - [LimeZu](https://limezu.itch.io/)
 
-Big thanks to open-source whiteboard project - [toeverything](https://github.com/toeverything/AFFiNE)
+Big thanks to open-source whiteboard project - [AFFiNE](https://github.com/toeverything/AFFiNE)
 
 ## License
 
