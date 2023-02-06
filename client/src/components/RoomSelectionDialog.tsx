@@ -163,7 +163,7 @@ export default function RoomSelectionDialog() {
                 <IconButton className="back-button" onClick={() => setShowCreateRoomForm(false)}>
                   <ArrowBackIcon />
                 </IconButton>
-                <Title>Coba kita cerita dulu</Title>
+                <Title>Ngayal Aja dulu</Title>
               </TitleWrapper>
               <CreateRoomForm />
             </CustomRoomWrapper>
@@ -175,7 +175,7 @@ export default function RoomSelectionDialog() {
                     <ArrowBackIcon />
                   </IconButton>
                   <Title>
-                    Selamat Datang di dunia Enterpreneur
+                    Namanya juga usaha
                     <Tooltip title="silahkan masuk ke dunia bisnis anda sendiri" placement="top">
                       <IconButton>
                         <HelpOutlineIcon className="tip" />

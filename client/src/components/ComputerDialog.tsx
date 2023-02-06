@@ -23,9 +23,9 @@ const Backdrop = styled.div`
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  // background: linear-gradient(110deg, #ef8669 60%, #f8ad47 60%);
-  background: rgb(73,116,154);
-  background: radial-gradient(circle, rgba(73,116,154,1) 0%, rgba(64,92,129,1) 55%, rgba(44,68,100,1) 92%);
+  background: linear-gradient(110deg, #ef8669 60%, #f8ad47 60%);
+  // background: rgb(73,116,154);
+  // background: radial-gradient(circle, rgba(73,116,154,1) 0%, rgba(64,92,129,1) 55%, rgba(44,68,100,1) 92%);
   border-radius: 16px;
   padding: 16px;
   color: #eee;
@@ -95,10 +95,11 @@ export default function ComputerDialog() {
   const playerNameMap = useAppSelector((state) => state.user.playerNameMap)
   const shareScreenManager = useAppSelector((state) => state.computer.shareScreenManager)
   const myStream = useAppSelector((state) => state.computer.myStream)
+  const myComputerID = useAppSelector((state) => state.computer.computerId)
   const peerStreams = useAppSelector((state) => state.computer.peerStreams)
-  useEffect(() => {
-    console.log(openDashboard)
-  }, [openDashboard])
+ 
+  console.log(myComputerID)
+
   return (
     <Backdrop>
       <Wrapper>
@@ -125,7 +126,9 @@ export default function ComputerDialog() {
             {shareScreenManager?.myStream ? 'Stop sharing' : 'Share Screen'}
           </Button>
         </div>
-        {!openDashboard ? <Menus setOpenDasboard={setOpenDasboard} /> : <Dashboard />}
+        {!shareScreenManager?.myStream && (
+          <>{!openDashboard ? <Menus setOpenDasboard={setOpenDasboard} /> : <Dashboard />}</>
+        )}
 
         <VideoGrid>
           {myStream && <VideoContainer stream={myStream} playerName="You" />}

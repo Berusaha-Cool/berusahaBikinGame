@@ -61,7 +61,7 @@ export const CreateRoomForm = () => {
   return (
     <CreateRoomFormWrapper onSubmit={handleSubmit}>
       <TextField
-        label="Nama Bisnis yang lu pengen buat ?"
+        label="Business Name"
         variant="outlined"
         color="secondary"
         autoFocus
