@@ -5,6 +5,7 @@ import LightModeTwoToneIcon from '@mui/icons-material/LightModeTwoTone'
 import MusicNoteTwoToneIcon from '@mui/icons-material/MusicNoteTwoTone'
 import MusicOffTwoToneIcon from '@mui/icons-material/MusicOffTwoTone'
 import TimerTwoToneIcon from '@mui/icons-material/TimerTwoTone'
+import GraphicEqIcon from '@mui/icons-material/GraphicEq'
 import Avatar from '@mui/material/Avatar'
 import Fab from '@mui/material/Fab'
 import IconButton from '@mui/material/IconButton'
@@ -22,6 +23,11 @@ import MusikPlayer from './MusikPlayer'
 
 import { ButtonBase } from '@mui/material'
 import { AuthContext } from '../context/authContext'
+import MoodSfx from './MoodSfx'
+
+import useSound from 'use-sound'
+import switchSfx from '../sounds/button-click-71316.mp3'
+
 const Backdrop = styled.div`
   position: fixed;
   display: flex;
@@ -111,7 +117,7 @@ export default function HelperButtonGroup() {
   const [countdown, setCountdown] = useState(false)
   const [showControlGuide, setShowControlGuide] = useState(false)
   const [showRoomInfo, setShowRoomInfo] = useState(false)
-  const [logoutNow, setLogoutNow] = useState(false)
+  const [moodRoom, setMoodRoom] = useState(false)
 
   const backgroundMode = useAppSelector((state) => state.user.backgroundMode)
   const roomJoined = useAppSelector((state) => state.room.roomJoined)
@@ -119,6 +125,8 @@ export default function HelperButtonGroup() {
   const roomName = useAppSelector((state) => state.room.roomName)
   const roomDescription = useAppSelector((state) => state.room.roomDescription)
   const dispatch = useAppDispatch()
+
+  const [play] = useSound(switchSfx, { volume: 0.5 })
 
   return (
     <Backdrop>
@@ -177,18 +185,27 @@ export default function HelperButtonGroup() {
         )}
         {countdown && (
           <Wrapper>
-            <IconButton
-              className="close"
-              onClick={() => setCountdown(!countdown)}
-              size="small"
-            ></IconButton>
+            <IconButton className="close" onClick={() => setCountdown(!countdown)} size="small">
+              <CloseIcon />
+            </IconButton>
             <CountdownComponent />
+          </Wrapper>
+        )}
+        {moodRoom && (
+          <Wrapper>
+            <MoodSfx />
           </Wrapper>
         )}
       </div>
       <ButtonGroup>
         <Tooltip title="Switch Background Theme">
-          <StyledFab size="small" onClick={() => dispatch(toggleBackgroundMode())}>
+          <StyledFab
+            size="large"
+            onClick={() => {
+              dispatch(toggleBackgroundMode())
+              play()
+            }}
+          >
             {backgroundMode === BackgroundMode.DAY ? (
               <DarkModeTwoToneIcon />
             ) : (
@@ -199,11 +216,23 @@ export default function HelperButtonGroup() {
       </ButtonGroup>
       {roomJoined && (
         <>
-          <Tooltip title="Timer Countdown">
+          <Tooltip title="Mood">
             <StyledFab
-              size="medium"
+              size="large"
+              onClick={() => {
+                setMoodRoom(!moodRoom)
+                play()
+              }}
+            >
+              <GraphicEqIcon />
+            </StyledFab>
+          </Tooltip>
+          <Tooltip title="Focus Timer">
+            <StyledFab
+              size="large"
               onClick={() => {
                 setCountdown(!countdown)
+                play()
               }}
             >
               <TimerTwoToneIcon />
@@ -215,9 +244,10 @@ export default function HelperButtonGroup() {
               onClick={() => {
                 setShowControlGuide(!showControlGuide)
                 setShowRoomInfo(false)
+                play()
               }}
             >
-              {showControlGuide ? <MusicNoteTwoToneIcon /> : <MusicOffTwoToneIcon />}
+              {showControlGuide ? <MusicOffTwoToneIcon /> : <MusicNoteTwoToneIcon />}
             </StyledFab>
           </Tooltip>
           <Tooltip title="Dashboard">
@@ -225,7 +255,7 @@ export default function HelperButtonGroup() {
               sx={{ width: 86, height: 86 }}
               onClick={() => {
                 setShowRoomInfo(!showRoomInfo)
-                setShowControlGuide(false)
+                play()
               }}
             >
               <Avatar
