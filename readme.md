@@ -1,4 +1,4 @@
-# SkyOffice ![License](https://img.shields.io/badge/license-MIT-blue) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
+# Berusaha Cool![License](https://img.shields.io/badge/license-MIT-blue) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
 
 
 ## Built with
@@ -10,7 +10,6 @@
 - [TypeScript](https://github.com/microsoft/TypeScript) and [ES6](https://github.com/eslint/eslint) - for both client and server sides
 
 ## Features
-
 - [Proximity Chat](#proximity-chat-distance-based-interactive-system)
 - [Flexible Screen Sharing](#flexible--immediate-screen-sharing)
 - [Multifunctional Rooms](#multifunctional-rooms)
@@ -45,5 +44,3 @@ Big thanks to open-source whiteboard project - [AFFiNE](https://github.com/toeve
 ## License
 
 This project is licensed under MIT.
-
-If you're using SkyOffice to power your virtual office or using our code in other projects, please consider [buy me a coffee](https://www.buymeacoffee.com/skyoffice). Thank you :)

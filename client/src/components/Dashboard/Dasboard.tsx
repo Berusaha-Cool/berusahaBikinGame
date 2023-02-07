@@ -15,7 +15,7 @@ import DetailCard from './DetailCard'
 import PageStageBusiness from './PageStageBusiness'
 
 export default function Dashboard() {
-  const [detailStageId, setDetailStageId] = useState<any>(0)
+  const [detailStageId, setDetailStageId] = useState<any>(-1)
 
   console.log(detailStageId)
   const db = [
@@ -111,100 +111,7 @@ export default function Dashboard() {
   return (
     <Container>
       <Grid container direction="row">
-        <Box sx={{ height: '100vh', width: '35%' }}>
-          <Avatar
-            alt="avatar "
-            src={AvatarBusiness}
-            sx={{
-              position: 'static',
-              width: '200px',
-              height: '200px',
-              marginX: 'auto',
-              marginTop: 9,
-            }}
-          />
-          <Box
-            sx={{
-              position: 'relative',
-              minWidth: 190,
-              width: 'auto',
-              height: 28,
-              textAlign: 'center',
-              marginX: 'auto',
-              top: 40,
-            }}
-          >
-            <Typography
-              sx={{
-                fontFamily: 'light',
-                fontStyle: 'normal',
-                fontWeight: '700px',
-                fontSize: '28px',
-                lineHeight: '20px',
-                /* or 56% */
-                alignItems: 'center',
-                letterSpacing: '-0.5px',
-                color: '#FFFFFF',
-                textShadow: '1px 1px 5px black',
-              }}
-            >
-              {db[0].business.businessName}
-              <ButtonBase
-                sx={{
-                  marginLeft: 2,
-                  width: '34px',
-                  height: '35px',
-                  background: '#58A6FF',
-                  borderRadius: 2,
-                  boxShadow: '2px 2px 5px black',
-                }}
-              >
-                <EditIcon
-                  sx={{
-                    width: '23px',
-                    height: '23px',
-                    color: '#ffffff',
-                  }}
-                />
-              </ButtonBase>
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              position: 'relative',
-              height: 'auto',
-              marginX: 'auto',
-              top: '78px',
-              background: '#3E75B5',
-              boxShadow: '2px 2px 5px black',
-              borderRadius: 5,
-            }}
-          >
-            <Typography
-              sx={{
-                padding: 2,
-                fontFamily: 'light',
-                fontStyle: 'normal',
-                fontWeight: '700px',
-                fontSize: '12px',
-                lineHeight: '20px',
-                /* or 167% */
-
-                display: 'flex',
-                alignItems: 'center',
-                letterSpacing: '-0.5px',
-
-                color: 'text.secondary',
-              }}
-            >
-              {db[0].business.desc}
-            </Typography>
-          </Box>
-          {/* <Box sx={{marginTop:'100px',background:"#ffff"}}>
-            <SubmitActivityCalendar />
-          </Box> */}
-        </Box>
-        <Box sx={{ height: '80vh', width: '65%' }}>
+        <Box sx={{ height: '80vh', width: '100%' }}>
           <Typography
             sx={{
               textShadow: '1px 1px 5px black',

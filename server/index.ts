@@ -4,7 +4,7 @@ import cors from 'cors'
 import { Server, LobbyRoom } from 'colyseus'
 import { monitor } from '@colyseus/monitor'
 import { RoomType } from '../types/Rooms'
-
+require('dotenv/config');
 // import socialRoutes from "@colyseus/social/express"
 
 import { SkyOffice } from './rooms/SkyOffice'
@@ -41,6 +41,9 @@ gameServer.define(RoomType.CUSTOM, SkyOffice).enableRealtimeListing()
 
 // register colyseus monitor AFTER registering your room handlers
 app.use('/colyseus', monitor())
+
+const feedback = require('./feedback')
+app.use('/feedback', feedback)
 
 gameServer.listen(port)
 console.log(`Listening on ws://localhost:${port}`)
