@@ -43,6 +43,7 @@ gameServer.define(RoomType.CUSTOM, SkyOffice).enableRealtimeListing()
 app.use('/colyseus', monitor())
 
 const feedback = require('./feedback')
+
 app.use('/feedback', feedback)
 
 gameServer.listen(port)

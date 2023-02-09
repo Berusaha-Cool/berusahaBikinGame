@@ -1,5 +1,19 @@
-# Berusaha Cool![License](https://img.shields.io/badge/license-MIT-blue) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
+<div align="center">
 
+<h1 style="border-bottom: none">
+    <b><a href="https://berusaha.cool">Berusaha.cool</a></b><br />
+    The Next-Gen Productivity tools
+    <br>
+</h1>
+
+<div>
+
+
+![License](https://img.shields.io/badge/license-MIT-blue) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
+
+<img width="720" alt="berusaha" src="./client/public/Berusaha.png"></div>
+
+<div align='left'>
 
 ## Built with
 
@@ -44,3 +58,4 @@ Big thanks to open-source whiteboard project - [AFFiNE](https://github.com/toeve
 ## License
 
 This project is licensed under MIT.
+</div>
