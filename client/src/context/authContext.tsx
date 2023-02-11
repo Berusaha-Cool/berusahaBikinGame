@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: IElement) => {
     }
   }
 
-  const validateAuth = (userId: any, displayName: any, email: any, photoURL: any) => {
+  const validateAuth = (userId: string, displayName: string, email: string, photoURL: string) => {
     if (userId)
       return setSession({
         userId,

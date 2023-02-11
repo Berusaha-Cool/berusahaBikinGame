@@ -21,7 +21,7 @@ export default function FeedbackAI() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    await fetch('http://localhost:2567/feedback', requestOptions)
+    await fetch(import.meta.env.FEEDBACK_URL, requestOptions)
       .then((response) => response.json())
       .then((json) => setDataAI(json))
   }

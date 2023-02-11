@@ -10,6 +10,7 @@ import { closeComputerDialog } from '../stores/ComputerStore'
 import Video from './Video'
 import Dashboard from './Dashboard/Dasboard'
 import Menus from './Menus'
+import { Box } from '@mui/system'
 
 const Backdrop = styled.div`
   position: fixed;
@@ -38,7 +39,8 @@ const Wrapper = styled.div`
     color: #0000006f;
     position: absolute;
     top: 16px;
-    right: 16px;
+    left: 16px;
+    background: #f9615f;
   }
 `
 
@@ -97,20 +99,65 @@ export default function ComputerDialog() {
   const myStream = useAppSelector((state) => state.computer.myStream)
   const myComputerID = useAppSelector((state) => state.computer.computerId)
   const peerStreams = useAppSelector((state) => state.computer.peerStreams)
- 
+
   console.log(myComputerID)
 
   return (
     <Backdrop>
       <Wrapper>
-        <IconButton
-          aria-label="close dialog"
-          className="close"
-          onClick={() => dispatch(closeComputerDialog())}
-        >
-          <CloseIcon />
-        </IconButton>
+        <Box sx={{ display: 'flex' }}>
+          <IconButton
+            aria-label="close dialog"
+            sx={{
+              margin: '6px',
+              background: '#F9615F',
+              opacity: 0.9,
+              color: 'white',
+              position: 'relative',
+              width: '24px',
+              height: '24px',
+            }}
+            onClick={() => dispatch(closeComputerDialog())}
+          >
+            <CloseIcon />
+          </IconButton>
+          <IconButton
+            aria-label="close dialog"
+            sx={{
+              borderRadius: 100,
+              margin: '6px',
+              background: '#FDBA46',
+              opacity: 0.9,
+              color: 'white',
+              width: '24px',
+              height: '24px',
+            }}
+          />
+          <IconButton
+            aria-label="close dialog"
+            sx={{
+              borderRadius: 100,
+              margin: '6px',
+              background: '#D1D1D1',
+              opacity: 0.9,
+              color: 'white',
+              width: '24px',
+              height: '24px',
+            }}
+          />
+        </Box>
+        {!shareScreenManager?.myStream ? (
+          <>{!openDashboard ? <Menus setOpenDasboard={setOpenDasboard} /> : <Dashboard />}</>
+        ) : (
+          <VideoGrid>
+            {myStream && <VideoContainer stream={myStream} playerName="You" />}
 
+            {[...peerStreams.entries()].map(([id, { stream }]) => {
+              const playerName = playerNameMap.get(id)
+              return <VideoContainer key={id} playerName={playerName} stream={stream} />
+            })}
+          </VideoGrid>
+        )}
         <div className="toolbar">
           <Button
             variant="contained"
@@ -126,18 +173,6 @@ export default function ComputerDialog() {
             {shareScreenManager?.myStream ? 'Stop sharing' : 'Share Screen'}
           </Button>
         </div>
-        {!shareScreenManager?.myStream && (
-          <>{!openDashboard ? <Menus setOpenDasboard={setOpenDasboard} /> : <Dashboard />}</>
-        )}
-
-        <VideoGrid>
-          {myStream && <VideoContainer stream={myStream} playerName="You" />}
-
-          {[...peerStreams.entries()].map(([id, { stream }]) => {
-            const playerName = playerNameMap.get(id)
-            return <VideoContainer key={id} playerName={playerName} stream={stream} />
-          })}
-        </VideoGrid>
       </Wrapper>
     </Backdrop>
   )

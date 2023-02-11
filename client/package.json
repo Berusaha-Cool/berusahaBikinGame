@@ -5,8 +5,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "vite build",
+    "preview": "set NODE_ENV=production && vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",

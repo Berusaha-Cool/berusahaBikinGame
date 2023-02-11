@@ -24,9 +24,6 @@ export const CreateRoomForm = () => {
   const [values, setValues] = useState<IRoomData>({
     name: '',
     description: '',
-    idea: '',
-    progress: '',
-    failure: '',
     password: null,
     autoDispose: false,
   })

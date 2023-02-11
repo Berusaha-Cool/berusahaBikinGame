@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAppSelector } from '../hooks'
 // import { styled } from "@mui/material/styles";
-import { Alert, AlertTitle, Avatar, ButtonBase, Card, CardMedia } from '@mui/material'
+import { Alert, AlertTitle, Avatar, Button, ButtonBase, Card, CardMedia, Tooltip } from '@mui/material'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Unstable_Grid2'
@@ -29,7 +29,7 @@ const WhiteboardWrapper = styled.div`
   border-radius: 25px;
   overflow: hidden;
   margin-right: 50px;
-
+  heigh:100%;
   iframe {
     width: 100%;
     height: 100%;
@@ -142,7 +142,7 @@ export default function Menus(props) {
                       >
                         <Grid xs={4} md={6}>
                           <Box>
-                            <ButtonBase onClick={handleClickApps}>
+                            <Tooltip title="Comming Soon">
                               <CardMedia
                                 className="BoxApps"
                                 sx={{
@@ -153,7 +153,7 @@ export default function Menus(props) {
                                 image={LogoAffine}
                                 alt="StoryMode"
                               />
-                            </ButtonBase>
+                            </Tooltip >
                             <Box
                               id="Apps"
                               sx={{
@@ -169,6 +169,7 @@ export default function Menus(props) {
                         </Grid>
                         <Grid xs={4} md={6}>
                           <Box>
+                          <ButtonBase onClick={handleClickApps}>
                             <CardMedia
                               className="BoxApps"
                               sx={{
@@ -179,6 +180,7 @@ export default function Menus(props) {
                               image={LogoCanvaClone}
                               alt="StoryMode"
                             />
+                          </ButtonBase>
                             <Box
                               id="Apps"
                               sx={{
@@ -194,6 +196,7 @@ export default function Menus(props) {
                         </Grid>
                         <Grid xs={4} md={6}>
                           <Box>
+                          <Tooltip title="Comming Soon">
                             <CardMedia
                               className="BoxApps"
                               sx={{
@@ -204,6 +207,7 @@ export default function Menus(props) {
                               image={LogoGrapejs}
                               alt="StoryMode"
                             />
+                            </Tooltip>
                             <Box
                               id="Apps"
                               sx={{
@@ -219,6 +223,7 @@ export default function Menus(props) {
                         </Grid>
                         <Grid xs={4} md={6}>
                           <Box>
+                          <Tooltip title="Comming Soon">
                             <CardMedia
                               className="BoxApps"
                               sx={{
@@ -229,6 +234,7 @@ export default function Menus(props) {
                               image={LogoMaker}
                               alt="StoryMode"
                             />
+                            </Tooltip>
                             <Box
                               id="Apps"
                               sx={{

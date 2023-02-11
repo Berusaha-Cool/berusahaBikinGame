@@ -1,23 +1,16 @@
-import { Box } from '@mui/system'
-import AudioPlayer from 'react-h5-audio-player'
-import React, { useState, useEffect } from 'react'
-import ParkIcon from '@mui/icons-material/Park'
-import ThunderstormIcon from '@mui/icons-material/Thunderstorm'
-import StorefrontIcon from '@mui/icons-material/Storefront'
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
+import ParkIcon from '@mui/icons-material/Park'
 import SailingIcon from '@mui/icons-material/Sailing'
+import StorefrontIcon from '@mui/icons-material/Storefront'
+import ThunderstormIcon from '@mui/icons-material/Thunderstorm'
+import { Box } from '@mui/system'
+import { useEffect, useState } from 'react'
+import AudioPlayer from 'react-h5-audio-player'
 
-import ReactAudioPlayer from 'react-audio-player'
 // import useSound from 'use-sound'
-import { IconButton, Slider, Stack } from '@mui/material'
-import { VolumeDown, VolumeUp } from '@mui/icons-material'
+import { IconButton } from '@mui/material'
 
 // sfx
-import rainySfx from '../sounds/light-rain-109591.mp3'
-import windTreeSfx from '../sounds/wind-in-trees-117477.mp3'
-import cafeSfx from '../sounds/busy-restaurant-dining-room-ambience-128466.mp3'
-import fireWoodSfx from '../sounds/bonfire-hq-6991.mp3'
-import oceanSfx from '../sounds/sandy-beach-calm-waves-water-nature-sounds-8052.mp3'
 
 function MoodSfx() {
   const [activeRainy, setActiveRainy] = useState(false)
@@ -25,44 +18,58 @@ function MoodSfx() {
   const [activeCafe, setActiveCafe] = useState(false)
   const [activeFireWood, setActiveFireWood] = useState(false)
   const [activeOcean, setActiveOcean] = useState(false)
-  const [value, setValue] = useState<number>(5)
-  const [volume, setVolume] = useState<number>(0.5)
-
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number)
-  }
-
-  useEffect(() => {
-    setVolume(value / 10)
-    console.log(volume)
-  }, [value])
 
   return (
     <>
       <Box sx={{ display: 'flex', gap: 3 }}>
         {activeRainy && (
           <Box sx={{ display: 'none' }}>
-            <ReactAudioPlayer src={rainySfx} autoPlay volume={volume} loop={true} />
+            <AudioPlayer
+              autoPlay
+              volume={0.6}
+              loop={true}
+              src="https://drive.google.com/uc?id=11aWDzCjOJAwJGEvRhowX6QYxCVh6Xkqb&export=download"
+            />
           </Box>
         )}
         {activeWind && (
           <Box sx={{ display: 'none' }}>
-            <ReactAudioPlayer src={windTreeSfx} autoPlay volume={volume} loop={true} />
+            <AudioPlayer
+              src="https://drive.google.com/uc?id=10OzdfWl5JUxbL_Qp0U-VP0jVDsp3RTXv&export=donwload"
+              autoPlay
+              volume={0.6}
+              loop={true}
+            />
           </Box>
         )}
         {activeCafe && (
           <Box sx={{ display: 'none' }}>
-            <ReactAudioPlayer src={cafeSfx} autoPlay volume={volume} loop={true} />
+            <AudioPlayer
+              src="https://drive.google.com/uc?id=1qv3iYQ6VN2H3nlXmv90OvzDVAYid0HFM&export=download"
+              autoPlay
+              volume={0.6}
+              loop={true}
+            />
           </Box>
         )}
         {activeFireWood && (
           <Box sx={{ display: 'none' }}>
-            <ReactAudioPlayer src={fireWoodSfx} autoPlay volume={volume} loop={true} />
+            <AudioPlayer
+              src="https://drive.google.com/uc?id=1kJRNL0YWwT4-mOyxmJKTqqO2FcWsq3Fo&export=download"
+              autoPlay
+              volume={0.6}
+              loop={true}
+            />
           </Box>
         )}
         {activeOcean && (
           <Box sx={{ display: 'none' }}>
-            <ReactAudioPlayer src={oceanSfx} autoPlay volume={volume} loop={true} />
+            <AudioPlayer
+              src="https://drive.google.com/uc?id=1dxL6oiyLczzyQliq3NVMzYY3fmqLOTFn&export=download"
+              autoPlay
+              volume={0.6}
+              loop={true}
+            />
           </Box>
         )}
 
@@ -113,13 +120,6 @@ function MoodSfx() {
             <SailingIcon />
           </IconButton>
         )}
-      </Box>
-      <Box sx={{ width: 200 }}>
-        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          <VolumeDown />
-          <Slider min={0} max={10} aria-label="Volume" value={value} onChange={handleChange} />
-          <VolumeUp />
-        </Stack>
       </Box>
     </>
   )
